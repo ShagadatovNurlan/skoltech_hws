@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+\begin{document}
+
+
+\section{Problem 3}
+\begin{center}
+$\displaystyle \min_{y} \quad 2y_1$\\
+$\text{s.t.} \quad \begin{pmatrix}
+0 & 5y_1& 0 \\ 
+5y_1 & 3y_2 & 0 \\ 
+0 & 0 & 4y_1+2 
+\end{pmatrix}$\\
+\vspace{5mm} %5mm vertical space
+\end{center}
+The top-left entry is 0 $\Rightarrow$ the first row and column are zeros, which
+means $y_1 = 0$ in any feaasible solution.  The feasible solutions are: $y_1 = 0, y_2 \geq 0$. So the primal optimum is 0.  
+\vspace{5mm}
+\begin{center}
+$y_1  \begin{pmatrix}
+0 & 5 & 0 \\ 
+5 & 0 & 0 \\ 
+0 & 0 & 4 
+\end{pmatrix} +
+y_2  \begin{pmatrix}
+0 & 0 & 0 \\ 
+0 & 3 & 0 \\ 
+0 & 0 & 0 
+\end{pmatrix}+ \begin{pmatrix}
+0 & 0 & 0 \\ 
+0 & 0 & 0 \\ 
+0 & 0 & 2 
+\end{pmatrix}\succeq 0$
+\end{center}
+to get the dual:
+\begin{center}
+$\max -2X_{33}$\\
+$\text{s.t.}\quad 5X_{12}+5X_{21}+4X_{33}=2$\\
+$3X_{22}=0$\\
+$X\succeq 0$
+\end{center}
+$X_{22}=0$  and $X\succeq 0 \Rightarrow X_{12}=X_{21}=0 \Rightarrow X_{33}=\frac{1}{2}$,  and  the optimal  value  for  this  dual  SDP  is $-1.$\\
+The duality gap is not zero in the optimum points.
+
+
+\section{Problem 4}
+
+
+\section{Problem 5}
+\begin{center}
+$\displaystyle \min_{x\in \mathbb{R}^n} \left\| Ax-b \right\|_2^2$\\
+s.t $Cx=d$
+\end{center}
+It can be written as:
+\begin{center}
+$\displaystyle \min_{x} x^T A^T A x - 2b^TAx$\\
+s.t $Cx=d$
+\end{center}
+$x^*$ is a solution if $Cx^*=d$ and $\left\| Ax_p-b \right\|_2^2 \leq \left\| Ax-b \right\|_2^2$ holds for any vector $x$ that satisfies $Cx=d$\\
+\vspace{5mm}
+Primal solution:
+\begin{center}
+$x_p = (A^TA)^{-1}A^Tb$
+\end{center}
+Lagrangian:
+\begin{center}
+$L(x,\lambda) = \inf_x \left\{ x^TA^TAx - 2b^T Ax + \lambda^T(Cx-d) \right\}$\\
+\vspace{5mm}
+$\frac{\partial L(x,\lambda)}{\partial x}=2A^TAx-2A^Tb+C^T\lambda$\\
+\vspace{5mm}
+$\frac{\partial L(x,\lambda)}{\partial x}=0 \Rightarrow x^* = (A^TA)^{-1}(A^Tb-\frac{1}{2}C^T\lambda)$
+\end{center}
+KKT conditions:
+\begin{enumerate}
+\item $\lambda \geq 0$
+\item $2A^TAx^* - 2 A^Tb+C^T\lambda = 0$
+\item $Cx^* -d = 0$
+\end{enumerate}
+\vspace{5mm}
+Dual solution:
+\begin{center}
+$\begin{bmatrix}
+x_d\\
+\lambda
+\end{bmatrix} = \begin{bmatrix}
+2A^TA & C^T\\
+C & 0 
+\end{bmatrix}^{-1}\begin{bmatrix}
+2A^Tb\\
+d
+\end{bmatrix}$
+\end{center}
+
+\section{Problem 6}
+
+1)
+\begin{center}
+$\displaystyle \min_{x\in \mathbb{R}^n} C^Tx$\\
+s.t $Ax=b$\\
+$\quad x \geq 0$ 
+\end{center}
+\vspace{5mm}
+Lagrangian:
+\begin{center}
+$g(y,z) = \inf L(x,y,z) := C^Tx + y^T(AX-b) - z^Tx$\\
+$0 = grad_x L(x,y,z) = C+A^Ty-z$\\
+$g(y,z) = - y^Tb $\\
+\end{center}
+Then dual problem:
+\begin{center}
+$\displaystyle \max_{y,z} g(y,z)$\\
+s.t $C+A^Ty-z=0$\\
+$\quad y\geq 0, z \geq 0$
+\end{center}
+Which is equivalent to:
+\begin{center}
+$\displaystyle \max_{y} -y^Tb$\\
+s.t $C+A^Ty=0$\\
+$\quad y\geq 0$
+\end{center}
+KKT conditions:
+\begin{enumerate}
+\item $z,y \geq 0$
+\item $-x^* \leq 0$
+\item $Ax^*-b = 0$
+\item $C + A^Ty-z=0$
+\item $z^*x^* = 0$
+\end{enumerate}
+
+
+2)
+\begin{center}
+$\displaystyle \min_{x\in \mathbb{R}^n} C^Tx - \tau \sum \log(x_i)$\\
+s.t $Ax=b$
+\end{center}
+\vspace{5mm}
+\begin{center}
+$L(x,\lambda) = C^Tx - \tau \sum \log (x_i) + \lambda^T(Ax-b)$
+$grad_xL = 0 = C - \begin{bmatrix}
+\frac{\tau}{x_1}\\
+...\\
+\frac{\tau}{x_n}
+\end{bmatrix} + A^T\lambda $
+\end{center}
+\end{document}
